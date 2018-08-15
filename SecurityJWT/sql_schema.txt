@@ -1,0 +1,87 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.1.10-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             9.4.0.5125
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for crud
+DROP DATABASE IF EXISTS `crud`;
+CREATE DATABASE IF NOT EXISTS `crud` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `crud`;
+
+-- Dumping structure for table crud.book
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE IF NOT EXISTS `book` (
+  `book_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `book_name` varchar(50) NOT NULL DEFAULT '0',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`book_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table crud.book: ~3 rows (approximately)
+DELETE FROM `book`;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` (`book_id`, `book_name`, `is_deleted`) VALUES
+	(2, 'Head first', b'0'),
+	(3, 'Java', b'0'),
+	(4, '.net', b'0');
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
+
+-- Dumping structure for table crud.hibernate_sequence
+DROP TABLE IF EXISTS `hibernate_sequence`;
+CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- Dumping data for table crud.hibernate_sequence: 1 rows
+DELETE FROM `hibernate_sequence`;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+INSERT INTO `hibernate_sequence` (`next_val`) VALUES
+	(5);
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+
+-- Dumping structure for table crud.role
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE IF NOT EXISTS `role` (
+  `role` varchar(50) NOT NULL,
+  PRIMARY KEY (`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table crud.role: ~1 rows (approximately)
+DELETE FROM `role`;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` (`role`) VALUES
+	('User');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+
+-- Dumping structure for table crud.user
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(1000) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `email` (`username`),
+  KEY `FK_user_role` (`role`),
+  CONSTRAINT `FK_user_role` FOREIGN KEY (`role`) REFERENCES `role` (`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table crud.user: ~1 rows (approximately)
+DELETE FROM `user`;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`user_id`, `username`, `password`, `role`) VALUES
+	(1, 's', '$2a$10$Q1o4r3meDFwZg4y5EBnzzOKuoIbfIJoFFP.QVRMyDjWArGU9p3R8O', 'User');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
